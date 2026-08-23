@@ -155,6 +155,15 @@ body{
 }
 .hint{font-size:12.5px;color:var(--muted);margin:6px 0 0}
 
+.intro{
+  font-size:14px;
+  color:var(--muted);
+  margin:0 0 18px;
+  padding-left:12px;
+  border-left:2px solid var(--brass);
+  line-height:1.5;
+}
+
 .row{display:flex;gap:12px}
 .row .field{flex:1}
 
@@ -334,7 +343,7 @@ body{
 
   <div class="modes" role="tablist" aria-label="How do you want to search?">
     <button class="mode-btn" id="tab-cert" role="tab" aria-selected="true" aria-controls="panel-cert">By certificate number</button>
-    <button class="mode-btn" id="tab-mobile" role="tab" aria-selected="false" aria-controls="panel-mobile">By mobile number</button>
+    <button class="mode-btn" id="tab-mobile" role="tab" aria-selected="false" aria-controls="panel-mobile">No number on it</button>
   </div>
 
   <section class="panel is-active" id="panel-cert" role="tabpanel" aria-labelledby="tab-cert">
@@ -348,6 +357,8 @@ body{
   </section>
 
   <section class="panel" id="panel-mobile" role="tabpanel" aria-labelledby="tab-mobile" hidden>
+    <p class="intro">Certificates issued before this register went online do not carry a
+    number. Students can find theirs here, and give it to an employer who needs to check it.</p>
     <div class="row">
       <div class="field">
         <label for="mobile">Mobile number</label>
@@ -359,7 +370,7 @@ body{
         <input id="dob" type="date">
       </div>
     </div>
-    <p class="hint" style="margin:-8px 0 16px">Use the mobile number you gave at admission.</p>
+    <p class="hint" style="margin:-8px 0 16px">Both must match what the institute has on file.</p>
     <button class="submit" id="go-mobile">Find my certificate</button>
   </section>
 
