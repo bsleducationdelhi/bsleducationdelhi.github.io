@@ -295,7 +295,8 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 .submit[disabled]{opacity:.55; cursor:default}
 
 /* ---- result ---- */
-#result{margin-top:20px}
+#result{margin-top:20px; scroll-margin-top:86px}
+.record + .record{margin-top:14px}
 #result:empty{margin-top:0}
 .record{background:var(--card); border:1px solid var(--rule); border-radius:4px; overflow:hidden; animation:rise .3s ease-out}
 @keyframes rise{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
@@ -442,20 +443,14 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 
         <section class="panel" id="panel-mobile" role="tabpanel" aria-labelledby="tab-mobile" hidden>
           <p class="intro">Certificates issued before this register went online do not
-          carry a number. Students can find theirs here, and give it to an employer
-          who needs to check it.</p>
-          <div class="row">
-            <div class="field">
-              <label for="mobile">Mobile number</label>
-              <input id="mobile" type="tel" inputmode="numeric" autocomplete="off"
-                     maxlength="10" placeholder="10 digits">
-            </div>
-            <div class="field">
-              <label for="dob">Date of birth</label>
-              <input id="dob" type="date">
-            </div>
+          carry a number. Students can look theirs up by mobile number, and pass the
+          certificate number on to an employer who needs to check it.</p>
+          <div class="field">
+            <label for="mobile">Mobile number</label>
+            <input id="mobile" type="tel" inputmode="numeric" autocomplete="off"
+                   maxlength="10" placeholder="10 digits">
+            <p class="hint">The number you gave the institute at admission.</p>
           </div>
-          <p class="hint" style="margin:-6px 0 15px">Both must match what the institute has on file.</p>
           <button class="submit" id="go-mobile">Find my certificate</button>
         </section>
 
@@ -634,7 +629,7 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
     this.value = this.value.replace(/\D/g, '').slice(0, 10);
   });
 
-  [certInput, document.getElementById('mobile'), document.getElementById('dob')]
+  [certInput, document.getElementById('mobile')]
     .forEach(function (el) {
       el.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
@@ -655,15 +650,10 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 
   document.getElementById('go-mobile').addEventListener('click', function () {
     var mobile = document.getElementById('mobile').value.trim();
-    var dob = document.getElementById('dob').value;
     if (mobile.length !== 10) {
       return msg('warn', 'Enter a 10-digit mobile number', 'Leave out +91 and any spaces.');
     }
-    if (!dob) {
-      return msg('warn', 'Enter your date of birth',
-        'Both the mobile number and date of birth must match our records.');
-    }
-    lookup(this, { mode: 'mobile', mobile: mobile, dob: dob });
+    lookup(this, { mode: 'mobile', mobile: mobile });
   });
 
   function lookup(button, payload) {
@@ -701,18 +691,28 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
         'Nothing in the register matches what you entered. Common reasons:', [
           'A character was mistyped \u2014 check O against 0, and I against 1',
           'The certificate was issued before this register went online',
-          'The details do not match what the institute has on file'
+          'The mobile number does not match the one held by the institute'
         ]);
     }
     if (data.status === 'throttled') {
-      return msg('warn', 'Too many attempts', 'Please wait a minute before trying again.');
+      return msg('warn', 'Too many searches just now', 'Please wait a minute and try again.');
     }
-    if (data.status !== 'valid' && data.status !== 'revoked') {
+    if (data.status !== 'found' || !data.certificates || !data.certificates.length) {
       return msg('warn', 'Could not complete the check', 'Please try again in a moment.');
     }
 
-    var c = data.certificate || {};
-    var isVoid = data.status === 'revoked';
+    var many = data.certificates.length > 1;
+    var head = many
+      ? '<p class="hint" style="margin:0 0 12px">' + data.certificates.length +
+        ' certificates are held against this number.</p>'
+      : '';
+
+    out.innerHTML = head + data.certificates.map(card).join('');
+    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function card(c) {
+    var isVoid = c.revoked === true;
 
     var rowsHtml = [
       ['Name', c.student_name, 'name'],
@@ -728,8 +728,7 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
        return '<div><dt>' + esc(r[0]) + '</dt><dd class="' + (r[2] || '') + '">' + esc(r[1]) + '</dd></div>';
      }).join('');
 
-    out.innerHTML =
-      '<article class="record">' +
+    return '<article class="record">' +
         '<div class="record-top">' +
           '<div class="seal ' + (isVoid ? 'is-void' : 'is-valid') + '">' +
             '<span>' + (isVoid ? 'NOT<br>VALID' : 'ON<br>RECORD') + '</span>' +
@@ -743,12 +742,10 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
         '<dl class="fields">' + rowsHtml + '</dl>' +
         (isVoid
           ? '<p class="notice is-void"><strong>This certificate has been revoked' +
-            (data.remarks ? ':</strong> ' + esc(data.remarks) : '.</strong>') +
+            (c.remarks ? ':</strong> ' + esc(c.remarks) : '.</strong>') +
             ' It must not be relied on.</p>'
           : '<p class="notice is-foot">This record was issued by BSL Education and is currently in force.</p>') +
       '</article>';
-
-    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function msg(kind, title, body, bullets) {
