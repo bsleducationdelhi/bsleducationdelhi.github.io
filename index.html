@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BSL Education, Delhi — Certificate verification</title>
-<meta name="description" content="Check whether a certificate issued by BSL Education, Delhi is genuine. Course and contact details for the institute.">
+<title>BSL Education, Mahipalpur Delhi — Certificate verification</title>
+<meta name="description" content="Check whether a certificate issued by BSL Education (British School of Language), Mahipalpur, Delhi is genuine. Computer, accounting, spoken English and data analytics courses.">
 
 <script>
 /* ==========================================================================
@@ -24,16 +24,24 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbzRpz-elHtADZdx7_2hWxC6
    These appear in the footer and on the Contact section.                  */
 
 const SITE = {
-  address:  ['____ Street / Building',        // <- fill these in
-             '____ Area',
-             'Delhi ______'],
+  since:    '2007',
 
-  phone:    '+91  __________',
-  whatsapp: '91__________',       // digits only, with 91, no + and no spaces
-  email:    '____@____.com',
+  address:  ['K-4, Ground Floor, Shiv Murti Complex',
+             'Mahipalpur Rangpuri Road, Mahipalpur',
+             'New Delhi 110037'],
 
-  hours:    [['Monday \u2013 Saturday', '__:__ am \u2013 __:__ pm'],
-             ['Sunday',                 'Closed']],
+  branches: 'Mahipalpur and Laxmi Nagar',
+
+  // Add or remove numbers freely.
+  phones:   ['+91 98910 84575',
+             '+91 92505 77145',
+             '+91 76689 25351'],
+
+  whatsapp: '919891084575',      // digits only, with 91, no + and no spaces
+  email:    'bslmahipalpur@gmail.com',
+
+  hours:    [['Monday \u2013 Saturday', '8:00 am \u2013 9:00 pm'],
+             ['Sunday',                 'Weekend batches only']],
 
   // Google Maps link. Search the institute on Maps, tap Share, paste here.
   // Leave as '' to hide the Maps button.
@@ -49,36 +57,135 @@ const SITE = {
 
 const COURSES = [
   {
-    name:     'Computer Hardware & Networking',
+    name:     'Diploma in Computer Application (DCA)',
     duration: '6 months',
-    mode:     'Classroom',
-    summary:  'Assembly, troubleshooting, operating systems, and basic network ' +
-              'setup for offices and small businesses.',
-    topics:   ['PC assembly and repair', 'Windows installation',
-               'Printers and peripherals', 'LAN setup']
+    mode:     'Diploma',
+    summary:  'The core office-computing diploma: MS Office, Tally and typing, ' +
+              'covered end to end.',
+    topics:   ['Computer fundamentals', 'MS Word, Excel, PowerPoint, Paint',
+               'Tally ERP 9.0 and Tally Prime', 'English typing']
   },
   {
-    name:     'Computer Applications',
+    name:     'Advance Diploma in Computer Application (ADCA)',
+    duration: '12 months',
+    mode:     'Diploma',
+    summary:  'Everything in the DCA, plus desktop publishing and advanced ' +
+              'Excel. The most complete programme we run.',
+    topics:   ['All DCA subjects', 'Diploma in DTP', 'Advance Excel',
+               'Project work and module tests']
+  },
+  {
+    name:     'Financial Accounting',
+    duration: '4 months',
+    mode:     'Classroom',
+    summary:  'Tally with GST alongside Advance Excel \u2014 built for accounts ' +
+              'and back-office roles.',
+    topics:   ['Tally 9.0 and Tally Prime with GST', 'TDS, TCS and service tax',
+               'Payroll, budgets, ledgers', 'Balance sheet, profit and loss',
+               'Advance Excel for MIS']
+  },
+  {
+    name:     'Data Analytics',
+    duration: 'Weekend batch, about 80 hours',
+    mode:     'Sat 7\u20139 pm, Sun 6\u20139 pm',
+    summary:  'Advance Excel, SQL and Power BI taught offline with real ' +
+              'projects and job-oriented practice.',
+    topics:   ['Advance Excel \u2014 formulas, pivot tables, dashboards',
+               'SQL \u2014 data extraction, joins, filters, reports',
+               'Power BI \u2014 dashboards, reports, DAX, KPIs']
+  },
+  {
+    name:     'Advance Excel',
     duration: '3 months',
     mode:     'Classroom',
-    summary:  'Everyday office computing for clerical and administrative work.',
-    topics:   ['Windows basics', 'MS Word', 'MS Excel', 'Internet and email']
+    summary:  'Over a hundred formulas plus the analysis tools that office ' +
+              'reporting actually runs on.',
+    topics:   ['Pivot tables and MIS reports', 'Lookup and logical functions',
+               'What-if analysis and Scenario Manager',
+               'PMT, IPMT, PPMT, FV, PV', 'Essential shortcuts']
   },
   {
-    name:     'Advanced Excel & Data Entry',
+    name:     'Diploma in DTP (Desktop Publishing)',
+    duration: '4 months',
+    mode:     'Diploma',
+    summary:  'Design and layout work for print \u2014 the skills print shops and ' +
+              'design studios hire for.',
+    topics:   ['CorelDRAW', 'Photoshop', 'PageMaker', 'Acrobat Reader',
+               'Project making and presentation']
+  },
+  {
+    name:     'Web Design & Development',
+    duration: '4 months',
+    mode:     'Classroom',
+    summary:  'Build and publish real websites, including hosting and domain ' +
+              'setup.',
+    topics:   ['HTML and web designing', 'WordPress', 'Basic SEO',
+               'Domain panel and cPanel', 'Domain and server configuration']
+  },
+  {
+    name:     'Tally ERP 9.0 & Tally Prime',
+    duration: '3 months',
+    mode:     'Classroom',
+    summary:  'Company accounts from setup to final statements, with GST ' +
+              'throughout.',
+    topics:   ['Company creation and day-to-day books', 'GST',
+               'TDS, TCS, service tax', 'Payroll and budgets',
+               'Balance sheet, profit and loss']
+  },
+  {
+    name:     'Spoken English',
+    duration: '2 to 6 months',
+    mode:     'Four levels',
+    summary:  'Start at the level that fits you and move up. Elementary, ' +
+              'Intermediate, Semi Advance and Comprehensive.',
+    topics:   ['Elementary \u2014 4 months', 'Intermediate \u2014 3 months',
+               'Semi Advance \u2014 2 months', 'Comprehensive \u2014 6 months']
+  },
+  {
+    name:     'Master ChatGPT',
     duration: '2 months',
     mode:     'Classroom',
-    summary:  'Formulas, data cleaning and reporting for anyone who works with ' +
-              'numbers day to day.',
-    topics:   ['Formulas and functions', 'Pivot tables', 'Charts', 'Speed data entry']
+    summary:  'Using AI chatbots for study, work and everyday tasks \u2014 ' +
+              'including where they get things wrong.',
+    topics:   ['How chatbots work, and prompt engineering',
+               'ChatGPT for exams and study', 'ChatGPT for business and work',
+               'Career, interview and research use',
+               'Limits and biases of AI tools']
   },
   {
-    name:     'Welding Technology',
-    duration: '6 months',
-    mode:     'Workshop',
-    summary:  'Hands-on arc and gas welding practice with workshop safety and ' +
-              'job-readiness training.',
-    topics:   ['Arc welding', 'Gas welding', 'Workshop safety', 'Reading basic drawings']
+    name:     'Typing \u2014 English & Hindi',
+    duration: '2 months',
+    mode:     'Classroom',
+    summary:  'Speed and accuracy on the latest software, including the Hindi ' +
+              'typing required for government job tests.',
+    topics:   ['English typing', 'Hindi typing for government exams']
+  },
+  {
+    name:     'Computer Hardware',
+    duration: '3 months',
+    mode:     'Classroom',
+    summary:  'Assembly, repair and troubleshooting for PCs and peripherals.',
+    topics:   []
+  },
+  {
+    name:     'Short modules',
+    duration: '15 days to 3 months',
+    mode:     'Single subject',
+    summary:  'Need one skill only? Any subject can be taken on its own.',
+    topics:   ['MS Word \u2014 15 days', 'Photoshop \u2014 15 days',
+               'MS Excel \u2014 1.5 months', 'PowerPoint \u2014 2 months',
+               'PageMaker \u2014 2 months', 'HTML \u2014 2 months',
+               'Data entry operator \u2014 2 months',
+               'MS Excel with ChatGPT \u2014 3 months', 'C++ \u2014 3 months']
+  },
+  {
+    name:     'University & certification courses',
+    duration: 'As per programme',
+    mode:     'UGC recognised',
+    summary:  'Degree programmes valid for government jobs, plus NIELIT ' +
+              'certifications.',
+    topics:   ['BA, B.Com, B.Sc', 'MA, M.Com, M.Sc, MBA', 'Paramedical courses',
+               'CCC and O Level']
   }
 ];
 
@@ -305,7 +412,8 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 <div class="hero" id="top">
   <div class="wrap">
     <h1><span class="stamp">Certificate</span> verification</h1>
-    <p>Check whether a certificate issued by BSL Education is genuine and still in force.</p>
+    <p>Check whether a certificate issued by BSL Education — British School of
+    Language, Mahipalpur — is genuine and still in force.</p>
   </div>
 </div>
 
@@ -361,10 +469,11 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
     <div class="wrap narrow">
       <span class="eyebrow">For employers</span>
       <h2>What this check tells you</h2>
-      <p class="lead">Every certificate this institute issues is entered in a register
-      held by the office. A result on this page is read live from that register, so it
-      reflects the current position, not the day the certificate was printed. If a
-      certificate has been withdrawn, the page says so plainly.</p>
+      <p class="lead">BSL has been teaching in Mahipalpur since 2007. Every certificate
+      the institute issues is entered in a register held by the office, and a result on
+      this page is read live from that register — so it reflects the current position,
+      not the day the certificate was printed. If a certificate has been withdrawn, the
+      page says so plainly.</p>
       <p class="lead" style="margin-top:12px">Nothing found? The certificate may predate
       the online register, or a character may have been mistyped. The office can confirm
       any record by phone.</p>
@@ -374,8 +483,9 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
   <section id="courses" class="band">
     <div class="wrap">
       <div class="section-head"><h2><span class="stamp">Courses</span></h2></div>
-      <p class="lead" style="margin-bottom:24px">Every course below ends in a certificate
-      that can be checked on this page by any employer.</p>
+      <p class="lead" style="margin-bottom:24px">Practical, offline classes on AC and
+      smart-board setups, with placement support. Every course ends in a certificate
+      that any employer can check on this page.</p>
       <div class="grid" id="course-grid"></div>
     </div>
   </section>
@@ -418,9 +528,15 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
     });
   }
 
-  var telHref = SITE.phone ? 'tel:' + String(SITE.phone).replace(/[^\d+]/g, '') : '';
+  var phones = SITE.phones || (SITE.phone ? [SITE.phone] : []);
   var waDigits = String(SITE.whatsapp || '').replace(/\D/g, '');
   var addrHtml = (SITE.address || []).map(esc).join('<br>');
+
+  function phoneLinks(sep) {
+    return phones.map(function (p) {
+      return '<a href="tel:' + String(p).replace(/[^\d+]/g, '') + '">' + esc(p) + '</a>';
+    }).join(sep);
+  }
 
   /* ---------- courses ---------- */
 
@@ -440,7 +556,8 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 
   var rows = [];
   if (addrHtml) rows.push(['Address', addrHtml]);
-  if (SITE.phone) rows.push(['Phone', '<a href="' + telHref + '">' + esc(SITE.phone) + '</a>']);
+  if (SITE.branches) rows.push(['Branches', esc(SITE.branches)]);
+  if (phones.length) rows.push(['Phone', phoneLinks('<br>')]);
   if (SITE.email) rows.push(['Email', '<a href="mailto:' + esc(SITE.email) + '">' + esc(SITE.email) + '</a>']);
 
   document.getElementById('contact-details').innerHTML = rows.map(function (r) {
@@ -459,9 +576,11 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
   /* ---------- footer ---------- */
 
   document.getElementById('footer-grid').innerHTML =
-    '<div><h4>BSL Education</h4><p>' + addrHtml + '</p></div>' +
+    '<div><h4>BSL Education</h4><p>' + addrHtml + '</p>' +
+      (SITE.branches ? '<p style="margin-top:8px">Branches: ' + esc(SITE.branches) + '</p>' : '') +
+    '</div>' +
     '<div><h4>Get in touch</h4>' +
-      (SITE.phone ? '<p><a href="' + telHref + '">' + esc(SITE.phone) + '</a></p>' : '') +
+      (phones.length ? '<p>' + phoneLinks('</p><p>') + '</p>' : '') +
       (SITE.email ? '<p><a href="mailto:' + esc(SITE.email) + '">' + esc(SITE.email) + '</a></p>' : '') +
       (waDigits ? '<p><a href="https://wa.me/' + waDigits + '" rel="noopener">WhatsApp</a></p>' : '') +
     '</div>' +
@@ -472,7 +591,7 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
     '</div>';
 
   document.getElementById('footer-base').innerHTML =
-    '&copy; ' + new Date().getFullYear() + ' BSL Education, Delhi. ' +
+    '&copy; ' + new Date().getFullYear() + ' BSL Education \u2014 British School of Language, Delhi. ' +
     'Certificate records are maintained by the institute office.';
 
   /* ---------- nav highlighting ---------- */
