@@ -319,6 +319,23 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 }
 .fields dd{margin:0; flex:1; font-size:15.5px; font-weight:600}
 .fields dd.name{font-size:20px}
+.actions{
+  display:flex; flex-wrap:wrap; gap:8px;
+  padding:14px 18px; border-top:1px solid var(--rule); background:#FAFBF9;
+}
+.act{
+  display:inline-flex; align-items:center; gap:6px;
+  border:1px solid var(--rule); border-radius:3px; background:#fff;
+  color:var(--ink); text-decoration:none; cursor:pointer;
+  font:inherit; font-size:12.5px; font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase; padding:9px 13px;
+}
+.act:hover{border-color:var(--ink)}
+.act.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
+.act.primary:hover{background:var(--ink-2)}
+.act:focus-visible{outline:2px solid var(--lime); outline-offset:2px}
+.act.done{background:var(--lime); border-color:var(--lime); color:#111}
+
 .notice{padding:12px 18px; font-size:13.5px; border-top:1px solid var(--rule)}
 .notice.is-void{background:#FBF0EE; color:var(--void)}
 .notice.is-foot{background:#FAFBF9; color:var(--muted)}
@@ -373,6 +390,118 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 .footer h4{color:#fff; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin:0 0 10px}
 .footer p{margin:0 0 4px}
 .footer-base{margin-top:26px; padding-top:16px; border-top:1px solid #2E2E2E; font-size:12.5px; color:#7E8484}
+
+
+/* ==================================================================
+   The certificate itself. Drawn at true A4 landscape and scaled to
+   fit the screen; printing resets the scale so it comes out at size.
+   ================================================================== */
+
+.cert-overlay{
+  position:fixed; inset:0; z-index:100;
+  background:rgba(10,12,12,.96);
+  display:none; overflow:auto;
+  padding:18px 18px 26px;
+}
+.cert-overlay.open{display:block}
+
+.cert-bar{
+  max-width:1122px; margin:0 auto 14px;
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+}
+.cert-bar .spacer{flex:1}
+.cert-bar .act{background:#fff; color:var(--ink); border-color:#fff}
+.cert-bar .act:hover{border-color:#fff; background:#ECEFEC}
+.cert-bar .act.primary{background:var(--lime); color:#111; border-color:var(--lime)}
+.cert-bar .act.primary:hover{background:#B7DE38}
+
+.cert-note{
+  display:none;
+  max-width:1122px; margin:0 auto 12px;
+  color:#9AA0A0; font-size:13px; line-height:1.5;
+}
+@media (max-width:760px){ .cert-note{display:block} }
+
+.cert-fit{
+  max-width:1122px; margin:0 auto;
+  overflow:hidden;
+}
+.cert-sheet{
+  width:297mm; height:210mm;
+  transform:scale(var(--cert-scale, 1));
+  transform-origin:top left;
+  position:relative; overflow:hidden;
+  background:#151515; color:#f5f5f5;
+  font-family:Arial, Helvetica, sans-serif;
+  box-shadow:0 18px 50px rgba(0,0,0,.5);
+}
+
+.cert-pattern{
+  position:absolute; right:-6mm; top:-8mm;
+  width:38%; height:46%; opacity:.09;
+  background:
+    linear-gradient(135deg, transparent 44%, #888 45%, #888 54%, transparent 55%) 0 0/13mm 13mm,
+    linear-gradient(45deg, transparent 44%, #888 45%, #888 54%, transparent 55%) 6.5mm 6.5mm/13mm 13mm;
+  -webkit-mask-image:linear-gradient(200deg, #000 35%, transparent 85%);
+  mask-image:linear-gradient(200deg, #000 35%, transparent 85%);
+}
+
+.cert-body{
+  position:relative; z-index:2; height:100%;
+  padding:18mm 20mm 16mm; display:flex; flex-direction:column;
+}
+
+.cert-top{display:flex; align-items:center; gap:5mm; font-size:5mm; color:#ddd; font-weight:500}
+.cert-logo{width:12mm; height:12mm; position:relative; flex:none}
+.cert-logo i{
+  position:absolute; width:5.2mm; height:6.8mm;
+  border-left:1.1mm solid #ddd; border-bottom:1.1mm solid #ddd;
+  transform:skewY(-28deg) rotate(30deg);
+}
+.cert-logo i:nth-child(1){left:.8mm; top:2.2mm}
+.cert-logo i:nth-child(2){left:3.3mm; top:.8mm}
+.cert-logo i:nth-child(3){left:5.8mm; top:2.2mm}
+
+.cert-title{margin-top:13mm; display:inline-flex; flex-direction:column; align-items:flex-start; width:max-content}
+.cert-title span{
+  display:block; background:#c8f500; color:#111;
+  font-size:11mm; line-height:1.12; font-weight:900;
+  letter-spacing:.3px; padding:2.4mm 5mm 2.2mm; text-transform:uppercase;
+}
+.cert-title span + span{margin-top:1mm}
+
+.cert-fields{
+  margin-top:15mm; width:100%; display:grid;
+  grid-template-columns:1fr 1.2fr; column-gap:12mm; row-gap:11mm;
+}
+.cert-label{font-size:3.4mm; color:#707070; margin-bottom:2.2mm}
+.cert-value{font-size:4.6mm; line-height:1.35; color:#eee; font-weight:600; min-height:6.2mm}
+.cert-value.lead{font-size:6mm}
+.cert-cell{border-bottom:.3mm solid #303236; padding-bottom:2mm}
+
+.cert-foot{margin-top:auto; display:grid; grid-template-columns:1.1fr 1fr .55fr; align-items:end; gap:10mm}
+.cert-verify{color:#aaa; font-size:3.4mm; line-height:1.65}
+.cert-verify strong{color:#ddd; font-weight:500}
+.cert-verify .serial{display:inline-block; color:#eee; font-weight:600}
+.cert-sign{padding-bottom:.5mm}
+.cert-sign .rule{width:52mm; border-bottom:.35mm solid #4a4a4a; margin-bottom:2.5mm}
+.cert-sign .who{display:block; width:52mm; color:#ddd; font-size:4mm; font-weight:600; min-height:5.5mm; margin-bottom:.6mm}
+.cert-sign .role{font-size:3.2mm; color:#888}
+.cert-qr{width:28mm; height:28mm; background:#c8f500; padding:2mm; justify-self:end}
+.cert-qr img{width:100%; height:100%; display:block}
+
+
+@media print{
+  @page{size:A4 landscape; margin:0}
+  body > *{display:none !important}
+  .cert-overlay{
+    display:block !important; position:static; inset:auto;
+    background:none; padding:0; overflow:visible;
+  }
+  .cert-bar, .cert-note{display:none !important}
+  .cert-fit{max-width:none; overflow:visible}
+  .cert-sheet{transform:none !important; box-shadow:none}
+}
 
 @media (max-width:620px){
   .masthead-bar{flex-direction:column; align-items:flex-start; gap:10px}
@@ -506,6 +635,17 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 
 </main>
 
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-modal="true" aria-label="Certificate">
+  <div class="cert-bar">
+    <button class="act primary" id="certPrint">Print / Save as PDF</button>
+    <span class="spacer"></span>
+    <button class="act" id="certClose">Close</button>
+  </div>
+  <p class="cert-note">A certificate is a wide page, so it looks small on a phone.
+  Save it as a PDF to read or send it.</p>
+  <div class="cert-fit"><div class="cert-sheet" id="certSheet"></div></div>
+</div>
+
 <footer class="footer">
   <div class="wrap">
     <div class="footer-grid" id="footer-grid"></div>
@@ -609,6 +749,7 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
   /* ---------- verification ---------- */
 
   var out = document.getElementById('result');
+  var INSTITUTE_NAME = 'BSL Education';
 
   function switchMode(active) {
     ['cert', 'mobile'].forEach(function (m) {
@@ -707,6 +848,8 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
         ' certificates are held against this number.</p>'
       : '';
 
+    shown = {};
+    data.certificates.forEach(function (c) { shown[c.cert_no] = c; });
     out.innerHTML = head + data.certificates.map(card).join('');
     out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -740,6 +883,7 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
           '</div>' +
         '</div>' +
         '<dl class="fields">' + rowsHtml + '</dl>' +
+        (isVoid ? '' : shareRow(c)) +
         (isVoid
           ? '<p class="notice is-void"><strong>This certificate has been revoked' +
             (c.remarks ? ':</strong> ' + esc(c.remarks) : '.</strong>') +
@@ -747,6 +891,187 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
           : '<p class="notice is-foot">This record was issued by BSL Education and is currently in force.</p>') +
       '</article>';
   }
+
+  /* ---------- the certificate view ---------- */
+
+  var QR_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAACjklEQVR42u2d0W3DMBBDkyILeADvP1hW8AD9KwwBUu9C0kmLx6+iUByHODyfaUm+b9t2c+v5fP78ve/7r2Nmqnx2Nsb1XYq+bigmzMXcv6lHl00KH128O4/vHr8y3uUDlQsWMBetmNvloItNLm7Oxsz6Ytf1YHYcKhcsYC6qMtelCrMqPXKXsxX+UrlgAWHuf2Ouqy+uHDORyVK5YAFz0RXMTfBRyQe6xzz/X8maFR+oXLCAuWjF3HSf6MpVuxzs9sIuH6hcsIC5aND9OI7oF3T5leaywm4qFyxgLlL73MS9fFquuQfKOVeYTuWCBcxFY5/bXRNR6UO7axkq/HJlGuk8gcoFC5iLVn2uwixXn9t9xtWdH5ZgdOW3ULlgAXPRirlKv9n9rOu5ViI36GYas++icsEC5qIVcxNsdTGucj4K313zxs5jqFywgLlo0HTegnL/7spqXXy/8jpB5YIFzEWrPteVgbo46DpmJXNI9MjkuWABc9GKud3nY+n9YlyMVp7vueZXULlgAXPRmC2c54qluebKKFy5R5fpXU+oXLCAuajK3DSbuvfv3f433YMzbwEsYC5yZgsKQ11ZQYWn6f1wlV6bygULmIvGPrey38KV74BQcgaF74kemcoFC5iLVtmCwixlLVn3nj09R811baBywQLmolf6XEXpvcES3HSdP5ULFjAXDXok1gUoLEvMheiuLXbNeaBywQLmopG5XVYq2cIn7zvO2l+wgDD3auZ2mfUJe9cquXD6He9ULljAXFRlbiJnULKC9LvfXf04eS5YwFz0TuYqGUU3V03sQ6b0xVQuWMBcVGVu+l1hVx6/0i+zDg0sIMy9mrnv2gPXtadtes5vl8VULljAXDToG5kF2z7RAjQdAAAAAElFTkSuQmCC';
+
+  var overlay  = document.getElementById('certOverlay');
+  var sheet    = document.getElementById('certSheet');
+  var lastFocus = null;
+
+  function certMarkup(c) {
+    function cell(label, value, lead) {
+      return '<div class="cert-cell">' +
+               '<div class="cert-label">' + esc(label) + '</div>' +
+               '<div class="cert-value' + (lead ? ' lead' : '') + '">' + esc(value || '') + '</div>' +
+             '</div>';
+    }
+
+    return '<div class="cert-pattern"></div>' +
+      '<div class="cert-body">' +
+
+        '<div class="cert-top">' +
+          '<div class="cert-logo"><i></i><i></i><i></i></div>' +
+          '<div>BSL EDUCATION &nbsp;\u00b7&nbsp; DELHI</div>' +
+        '</div>' +
+
+        '<div class="cert-title"><span>Certificate of</span><span>Completion</span></div>' +
+
+        '<div class="cert-fields">' +
+          cell('Presented to', c.student_name, true) +
+          cell('in recognition of successfully completing the', c.course) +
+          cell('Duration', c.duration) +
+          cell('Result', c.result) +
+          cell('Date of issuance', c.issue_date) +
+          cell('Training centre', c.center) +
+        '</div>' +
+
+        '<div class="cert-foot">' +
+          '<div class="cert-verify">' +
+            '<strong>Verification:</strong> bsleducationdelhi.github.io<br>' +
+            '<strong>ID:</strong> <span class="serial">' + esc(c.cert_no) + '</span>' +
+          '</div>' +
+          '<div class="cert-sign">' +
+            '<div class="rule"></div>' +
+            '<span class="who">' + esc(c.principal_name || '') + '</span>' +
+            '<span class="role">Principal</span>' +
+          '</div>' +
+          '<div class="cert-qr"><img src="' + QR_SRC + '" alt=""></div>' +
+        '</div>' +
+
+      '</div>';
+  }
+
+  function fitCertificate() {
+    // 297mm is 1122.5 CSS pixels at the browser's 96dpi reference.
+    var A4 = 1122.5;
+    var box = overlay.querySelector('.cert-fit');
+    var scale = Math.min(1, box.clientWidth / A4);
+    sheet.style.setProperty('--cert-scale', scale);
+    box.style.height = (210 / 297 * A4 * scale) + 'px';
+  }
+
+  function openCertificate(c) {
+    lastFocus = document.activeElement;
+    sheet.innerHTML = certMarkup(c);
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    fitCertificate();
+    document.getElementById('certClose').focus();
+  }
+
+  function closeCertificate() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    sheet.innerHTML = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  document.getElementById('certClose').addEventListener('click', closeCertificate);
+  document.getElementById('certPrint').addEventListener('click', function () { window.print(); });
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeCertificate(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeCertificate();
+  });
+  window.addEventListener('resize', function () {
+    if (overlay.classList.contains('open')) fitCertificate();
+  });
+
+  // Records currently on screen, so a button can reopen its own certificate.
+  var shown = {};
+
+  out.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-view]');
+    if (!btn) return;
+    var c = shown[btn.getAttribute('data-view')];
+    if (c) openCertificate(c);
+  });
+
+
+  /* ---------- download and share ---------- */
+
+  function certLink(certNo) {
+    return location.origin + location.pathname + '?cert=' + encodeURIComponent(certNo);
+  }
+
+  function shareRow(c) {
+    var link = certLink(c.cert_no);
+    var out = [];
+
+    out.push('<button class="act primary" data-view="' + esc(c.cert_no) +
+             '">View certificate</button>');
+
+    if (c.pdf_download) {
+      out.push('<a class="act" href="' + esc(c.pdf_download) +
+               '" rel="noopener">\u2193 PDF file</a>');
+    }
+
+    var waText = 'My certificate from BSL Education \u2014 ' + (c.course || '') +
+                 '. Verify it here: ' + link;
+    out.push('<a class="act" rel="noopener" target="_blank" href="https://wa.me/?text=' +
+             encodeURIComponent(waText) + '">WhatsApp</a>');
+
+    // LinkedIn's own "add a certification" form, pre-filled.
+    var li = 'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME' +
+             '&name=' + encodeURIComponent(c.course || 'Certificate') +
+             '&organizationName=' + encodeURIComponent(INSTITUTE_NAME) +
+             '&certUrl=' + encodeURIComponent(link) +
+             '&certId=' + encodeURIComponent(c.cert_no);
+    var iso = String(c.issue_iso || '');
+    if (/^\d{4}-\d{2}/.test(iso)) {
+      li += '&issueYear=' + iso.slice(0, 4) + '&issueMonth=' + Number(iso.slice(5, 7));
+    }
+    out.push('<a class="act" rel="noopener" target="_blank" href="' + li +
+             '">Add to LinkedIn</a>');
+
+    out.push('<button class="act" data-copy="' + esc(link) + '">Copy link</button>');
+
+    return '<div class="actions">' + out.join('') + '</div>';
+  }
+
+  out.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('[data-copy]');
+    if (!btn) return;
+    var text = btn.getAttribute('data-copy');
+    var label = btn.textContent;
+
+    function done() {
+      btn.textContent = 'Copied';
+      btn.classList.add('done');
+      setTimeout(function () {
+        btn.textContent = label;
+        btn.classList.remove('done');
+      }, 1800);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+
+    function fallback() {
+      var box = document.createElement('textarea');
+      box.value = text;
+      box.style.position = 'fixed';
+      box.style.opacity = '0';
+      document.body.appendChild(box);
+      box.select();
+      try { document.execCommand('copy'); done(); } catch (err) { /* nothing to do */ }
+      document.body.removeChild(box);
+    }
+  });
+
+  /* A shared link opens straight onto that certificate. */
+  (function deepLink() {
+    var m = location.search.match(/[?&]cert=([^&]+)/);
+    if (!m) return;
+    var certNo = decodeURIComponent(m[1]).toUpperCase();
+    if (certNo.replace(/[^A-Z0-9]/g, '').length < 8) return;
+    certInput.value = certNo;
+    document.getElementById('go-cert').click();
+  })();
 
   function msg(kind, title, body, bullets) {
     out.innerHTML =
