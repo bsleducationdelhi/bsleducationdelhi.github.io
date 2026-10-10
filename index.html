@@ -17,7 +17,7 @@
    Your Apps Script web app URL, from Deploy > New deployment.
    Looks like:  https://script.google.com/macros/s/AKfy..../exec           */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbzRpz-elHtADZdx7_2hWxC6G3-rdIoPt7KG6-OBqDiXxLzmcgZAOFVx6IBGGI0zTMVhSg/exec';
+const API_URL = '';
 
 
 /* --- 2. Institute details -----------------------------------------------
@@ -431,65 +431,71 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
   transform:scale(var(--cert-scale, 1));
   transform-origin:top left;
   position:relative; overflow:hidden;
-  background:#151515; color:#f5f5f5;
-  font-family:Arial, Helvetica, sans-serif;
+  background:#FBF9F4; color:#1A2238;
+  font-family:Georgia,'Times New Roman',serif;
   box-shadow:0 18px 50px rgba(0,0,0,.5);
 }
 
-.cert-pattern{
-  position:absolute; right:-6mm; top:-8mm;
-  width:38%; height:46%; opacity:.09;
-  background:
-    linear-gradient(135deg, transparent 44%, #888 45%, #888 54%, transparent 55%) 0 0/13mm 13mm,
-    linear-gradient(45deg, transparent 44%, #888 45%, #888 54%, transparent 55%) 6.5mm 6.5mm/13mm 13mm;
-  -webkit-mask-image:linear-gradient(200deg, #000 35%, transparent 85%);
-  mask-image:linear-gradient(200deg, #000 35%, transparent 85%);
-}
+.cert-edge{position:absolute; inset:7mm; border:1.1mm solid #1A2238}
+.cert-edge::after{content:""; position:absolute; inset:2.2mm; border:.3mm solid #B08D3F}
+.cert-corner{position:absolute; width:14mm; height:14mm; border:.6mm solid #B08D3F}
+.cc1{left:11mm; top:11mm; border-right:0; border-bottom:0}
+.cc2{right:11mm; top:11mm; border-left:0; border-bottom:0}
+.cc3{left:11mm; bottom:11mm; border-right:0; border-top:0}
+.cc4{right:11mm; bottom:11mm; border-left:0; border-top:0}
 
 .cert-body{
   position:relative; z-index:2; height:100%;
-  padding:18mm 20mm 16mm; display:flex; flex-direction:column;
+  padding:20mm 26mm 18mm;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
 }
 
-.cert-top{display:flex; align-items:center; gap:5mm; font-size:5mm; color:#ddd; font-weight:500}
-.cert-logo{width:12mm; height:12mm; position:relative; flex:none}
-.cert-logo i{
-  position:absolute; width:5.2mm; height:6.8mm;
-  border-left:1.1mm solid #ddd; border-bottom:1.1mm solid #ddd;
-  transform:skewY(-28deg) rotate(30deg);
+.cert-inst{font-size:7mm; font-weight:700; letter-spacing:1.2mm; text-transform:uppercase}
+.cert-sub{font-size:3.2mm; letter-spacing:.9mm; text-transform:uppercase; color:#6A6F80; margin-top:1.5mm}
+.cert-hr{width:46mm; border-bottom:.5mm solid #B08D3F; margin:4mm 0 6mm}
+.cert-head{font-size:12mm; font-weight:400; letter-spacing:1.6mm; text-transform:uppercase}
+.cert-intro{font-size:3.8mm; color:#5A6072; margin-top:7mm; font-style:italic}
+.cert-name{
+  font-size:13mm; margin-top:3mm; min-width:150mm;
+  border-bottom:.4mm solid #D6CDB4; padding-bottom:2mm;
 }
-.cert-logo i:nth-child(1){left:.8mm; top:2.2mm}
-.cert-logo i:nth-child(2){left:3.3mm; top:.8mm}
-.cert-logo i:nth-child(3){left:5.8mm; top:2.2mm}
-
-.cert-title{margin-top:13mm; display:inline-flex; flex-direction:column; align-items:flex-start; width:max-content}
-.cert-title span{
-  display:block; background:#c8f500; color:#111;
-  font-size:11mm; line-height:1.12; font-weight:900;
-  letter-spacing:.3px; padding:2.4mm 5mm 2.2mm; text-transform:uppercase;
+.cert-for{font-size:3.8mm; color:#5A6072; font-style:italic; margin-top:7mm}
+.cert-course{font-size:6.5mm; font-weight:700; margin-top:2mm}
+.cert-meta{display:flex; gap:14mm; margin-top:9mm; font-size:3.6mm; color:#5A6072}
+.cert-meta b{
+  display:block; font-size:4.4mm; color:#1A2238;
+  font-family:Arial,Helvetica,sans-serif; font-weight:700; margin-top:1mm;
 }
-.cert-title span + span{margin-top:1mm}
 
-.cert-fields{
-  margin-top:15mm; width:100%; display:grid;
-  grid-template-columns:1fr 1.2fr; column-gap:12mm; row-gap:11mm;
+.cert-foot{
+  margin-top:auto; width:100%;
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:end; gap:8mm;
 }
-.cert-label{font-size:3.4mm; color:#707070; margin-bottom:2.2mm}
-.cert-value{font-size:4.6mm; line-height:1.35; color:#eee; font-weight:600; min-height:6.2mm}
-.cert-value.lead{font-size:6mm}
-.cert-cell{border-bottom:.3mm solid #303236; padding-bottom:2mm}
+.cert-ver{
+  display:flex; align-items:center; gap:4mm; text-align:left;
+  font-size:3mm; color:#6A6F80; font-family:Arial,Helvetica,sans-serif; line-height:1.6;
+}
+.cert-ver b{color:#1A2238}
+.cert-ver .qr{width:20mm; height:20mm; flex:none}
+.cert-ver .qr img{width:100%; height:100%; display:block}
 
-.cert-foot{margin-top:auto; display:grid; grid-template-columns:1.1fr 1fr .55fr; align-items:end; gap:10mm}
-.cert-verify{color:#aaa; font-size:3.4mm; line-height:1.65}
-.cert-verify strong{color:#ddd; font-weight:500}
-.cert-verify .serial{display:inline-block; color:#eee; font-weight:600}
-.cert-sign{padding-bottom:.5mm}
-.cert-sign .rule{width:52mm; border-bottom:.35mm solid #4a4a4a; margin-bottom:2.5mm}
-.cert-sign .who{display:block; width:52mm; color:#ddd; font-size:4mm; font-weight:600; min-height:5.5mm; margin-bottom:.6mm}
-.cert-sign .role{font-size:3.2mm; color:#888}
-.cert-qr{width:28mm; height:28mm; background:#c8f500; padding:2mm; justify-self:end}
-.cert-qr img{width:100%; height:100%; display:block}
+.cert-seal{
+  width:26mm; height:26mm; border:.6mm solid #B08D3F; border-radius:50%;
+  display:grid; place-items:center; position:relative; justify-self:center;
+}
+.cert-seal::after{content:""; position:absolute; inset:2mm; border:.3mm solid #B08D3F; border-radius:50%}
+.cert-seal span{
+  font-size:2.6mm; letter-spacing:.4mm; color:#B08D3F; text-transform:uppercase;
+  font-family:Arial,Helvetica,sans-serif; font-weight:700; line-height:1.3;
+}
 
+.cert-sign{text-align:right; justify-self:end}
+.cert-sign .rule{width:52mm; border-bottom:.4mm solid #8A8F9E; margin-bottom:2mm}
+.cert-sign .who{font-size:4.4mm; font-weight:700; min-height:5mm}
+.cert-sign .role{
+  font-size:3mm; color:#6A6F80;
+  font-family:Arial,Helvetica,sans-serif; letter-spacing:.3mm;
+}
 
 @media print{
   @page{size:A4 landscape; margin:0}
@@ -894,52 +900,54 @@ main > section h2{font-size:21px; margin:0 0 16px; font-weight:700}
 
   /* ---------- the certificate view ---------- */
 
-  var QR_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAACjklEQVR42u2d0W3DMBBDkyILeADvP1hW8AD9KwwBUu9C0kmLx6+iUByHODyfaUm+b9t2c+v5fP78ve/7r2Nmqnx2Nsb1XYq+bigmzMXcv6lHl00KH128O4/vHr8y3uUDlQsWMBetmNvloItNLm7Oxsz6Ytf1YHYcKhcsYC6qMtelCrMqPXKXsxX+UrlgAWHuf2Ouqy+uHDORyVK5YAFz0RXMTfBRyQe6xzz/X8maFR+oXLCAuWjF3HSf6MpVuxzs9sIuH6hcsIC5aND9OI7oF3T5leaywm4qFyxgLlL73MS9fFquuQfKOVeYTuWCBcxFY5/bXRNR6UO7axkq/HJlGuk8gcoFC5iLVn2uwixXn9t9xtWdH5ZgdOW3ULlgAXPRirlKv9n9rOu5ViI36GYas++icsEC5qIVcxNsdTGucj4K313zxs5jqFywgLlo0HTegnL/7spqXXy/8jpB5YIFzEWrPteVgbo46DpmJXNI9MjkuWABc9GKud3nY+n9YlyMVp7vueZXULlgAXPRmC2c54qluebKKFy5R5fpXU+oXLCAuajK3DSbuvfv3f433YMzbwEsYC5yZgsKQ11ZQYWn6f1wlV6bygULmIvGPrey38KV74BQcgaF74kemcoFC5iLVtmCwixlLVn3nj09R811baBywQLmolf6XEXpvcES3HSdP5ULFjAXDXok1gUoLEvMheiuLXbNeaBywQLmopG5XVYq2cIn7zvO2l+wgDD3auZ2mfUJe9cquXD6He9ULljAXFRlbiJnULKC9LvfXf04eS5YwFz0TuYqGUU3V03sQ6b0xVQuWMBcVGVu+l1hVx6/0i+zDg0sIMy9mrnv2gPXtadtes5vl8VULljAXDToG5kF2z7RAjQdAAAAAElFTkSuQmCC';
+  var QR_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAACmElEQVR42u2dMU7EMBREWbSnoEGi4wYcgGNzD2ruQINo6FBkyeZ/Zsa7oDcVQt5sdvT18jOxndPdw9ONW2+vL99/3z8+/zhmpspnZ2Nc36Xo9gbFhLmY+zd17rJJ4aOLd8fx3eNXxrt8oHLBAuaiFXO7HHSxycXN2ZhZX+y6HsyOQ+WCBcxFVea6VGFWpUfucrbCXyoXLCDM/W/MdfXFlWMmMlkqFyxgLtrB3AQflXyge8zj/5WsWfGBygULmItWzE33ia5ctcvBbi/s8oHKBQuYiwadPj/eo1/Q5Veaywq7qVywgLlI7XMT9/JpueYeKOdcYTqVCxYwF419bndNRKUP7a5lqPDLlWmk8wQqFyxgLlr1uQqzXH1u9xlXd35YgtGV30LlggXMRSvmKv1m97Ou51qJ3KCbacy+i8oFC5iLVsxNsNXFuMr5KHx3zRs7jqFywQLmokHTeQvK/bsrq3Xxfed1gsoFC5iLVn2uKwN1cdB1zErmkOiRyXPBAuaiFXO7z8fS+8W4GK0833PNr6BywQLmojFbOM4VS3PNlVG4co8u07ueULlgAXNRlblpNnXv37v9b7oHZ94CWMBc5MwWFIa6soIKT9P74Sq9NpULFjAXjX1uZb+Fne+AUHIGhe+JHpnKBQuYi1bZgsIsZS1Z9549PUfNdW2gcsEC5qLf9LmK0nuDJbjpOn8qFyxgLhp0TqwLUFiWmAvRXVvsmvNA5YIFzEUjc7usVLKFa953nLW/YAFh7m7mdpl1DXvXKrlw+h3vVC5YwFxUZW4iZ1CygvS73139OHkuWMBcdEnmKhlFN1dN7EOm9MVULljAXFRlbvpdYTuPX+mXWYcGFhDm7mbupfbAde1pm57z22UxlQsWMBcN+gIfVN5bc9z72QAAAABJRU5ErkJggg==';
 
   var overlay  = document.getElementById('certOverlay');
   var sheet    = document.getElementById('certSheet');
   var lastFocus = null;
 
   function certMarkup(c) {
-    function cell(label, value, lead) {
-      return '<div class="cert-cell">' +
-               '<div class="cert-label">' + esc(label) + '</div>' +
-               '<div class="cert-value' + (lead ? ' lead' : '') + '">' + esc(value || '') + '</div>' +
-             '</div>';
+    function meta(label, value) {
+      return value ? '<div>' + esc(label) + '<b>' + esc(value) + '</b></div>' : '';
     }
 
-    return '<div class="cert-pattern"></div>' +
+    return '' +
+      '<div class="cert-edge"></div>' +
+      '<div class="cert-corner cc1"></div><div class="cert-corner cc2"></div>' +
+      '<div class="cert-corner cc3"></div><div class="cert-corner cc4"></div>' +
+
       '<div class="cert-body">' +
+        '<div class="cert-inst">BSL Education</div>' +
+        '<div class="cert-sub">British School of Language &nbsp;\u00b7&nbsp; ' +
+          'Mahipalpur, Delhi &nbsp;\u00b7&nbsp; Since 2007</div>' +
+        '<div class="cert-hr"></div>' +
 
-        '<div class="cert-top">' +
-          '<div class="cert-logo"><i></i><i></i><i></i></div>' +
-          '<div>BSL EDUCATION &nbsp;\u00b7&nbsp; DELHI</div>' +
-        '</div>' +
+        '<div class="cert-head">Certificate of Completion</div>' +
+        '<div class="cert-intro">This is to certify that</div>' +
+        '<div class="cert-name">' + esc(c.student_name || '') + '</div>' +
+        '<div class="cert-for">has successfully completed the course of study in</div>' +
+        '<div class="cert-course">' + esc(c.course || '') + '</div>' +
 
-        '<div class="cert-title"><span>Certificate of</span><span>Completion</span></div>' +
-
-        '<div class="cert-fields">' +
-          cell('Presented to', c.student_name, true) +
-          cell('in recognition of successfully completing the', c.course) +
-          cell('Duration', c.duration) +
-          cell('Result', c.result) +
-          cell('Date of issuance', c.issue_date) +
-          cell('Training centre', c.center) +
+        '<div class="cert-meta">' +
+          meta('Duration', c.duration) +
+          meta('Result', c.result) +
+          meta('Date of issuance', c.issue_date) +
+          meta('Centre', c.center) +
         '</div>' +
 
         '<div class="cert-foot">' +
-          '<div class="cert-verify">' +
-            '<strong>Verification:</strong> bsleducationdelhi.github.io<br>' +
-            '<strong>ID:</strong> <span class="serial">' + esc(c.cert_no) + '</span>' +
+          '<div class="cert-ver">' +
+            '<div class="qr"><img src="' + QR_SRC + '" alt=""></div>' +
+            '<div>Verify at bsleducationdelhi.github.io<br>' +
+              '<b>' + esc(c.cert_no) + '</b></div>' +
           '</div>' +
+          '<div class="cert-seal"><span>Verified<br>Record</span></div>' +
           '<div class="cert-sign">' +
             '<div class="rule"></div>' +
-            '<span class="who">' + esc(c.principal_name || '') + '</span>' +
-            '<span class="role">Principal</span>' +
+            '<div class="who">' + esc(c.principal_name || '') + '</div>' +
+            '<div class="role">PRINCIPAL</div>' +
           '</div>' +
-          '<div class="cert-qr"><img src="' + QR_SRC + '" alt=""></div>' +
         '</div>' +
-
       '</div>';
   }
 
